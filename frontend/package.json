@@ -9,6 +9,8 @@
     "dev": "webpack serve --mode development"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
+    "@react-login-page/page8": "^1.0.0",
     "lucide-react": "^0.284.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -19,6 +21,7 @@
     "@babel/preset-react": "^7.22.0",
     "babel-loader": "^9.1.0",
     "css-loader": "^6.8.0",
+    "dotenv-webpack": "^8.0.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.0",
     "webpack": "^5.89.0",

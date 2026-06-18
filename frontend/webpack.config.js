@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack'); // Import webpack
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -24,6 +26,10 @@ module.exports = {
 		test: /\.css$/,
 		use: ['style-loader', 'css-loader', 'postcss-loader'],
 	  },
+	  {
+		test: /\.(png|svg|jpg|jpeg|gif)$/i,
+		type: 'asset/resource',
+	  },
 	],
   },
   plugins: [
@@ -31,6 +37,7 @@ module.exports = {
 	  template: './public/index.html',
 	  filename: 'index.html',
 	}),
+	new Dotenv(),
   ],
   resolve: {
 	extensions: ['.js', '.jsx'],
@@ -39,5 +46,8 @@ module.exports = {
 	port: 3000,
 	hot: true,
 	historyApiFallback: true,
+	static: {
+	  directory: path.join(__dirname, 'public'),
+	},
   },
 };
