@@ -8,7 +8,7 @@ export default function Header({ user, onLogout }) {
           <div className="brand-mark"><Languages size={22} /></div>
           <div>
             <h1 className="brand-title">BAIF AI Translation Platform</h1>
-            <p className="brand-sub">Offline AI Translation for Bharat</p>
+            <p className="brand-sub">AI Translation for Bharat</p>
           </div>
         </div>
         <div className="flex items-center gap-4">

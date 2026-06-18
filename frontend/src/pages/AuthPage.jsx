@@ -14,7 +14,7 @@ export default function AuthPage() {
         <div className="text-center" style={{ marginBottom: 24 }}>
           <div className="auth-logo"><Languages size={28} /></div>
           <h1 className="auth-title">BAIF AI Translation Platform</h1>
-          <p className="auth-sub">Offline AI Translation for Bharat</p>
+          <p className="auth-sub">AI Translation for Bharat</p>
         </div>
 
         <div className="card card-pad">
