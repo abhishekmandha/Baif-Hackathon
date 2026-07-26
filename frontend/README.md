@@ -36,6 +36,17 @@ frontend/
    npm install
    ```
 
+3.  **Configure Environment:**
+    The frontend uses a `.env` file for configuration, specifically for the API URL. Create a file named `.env` in the `frontend` directory. An example file `.env.example` is provided.
+    ```bash
+    # In the 'frontend' directory
+    copy .env.example .env
+    ```
+    Ensure your `frontend/.env` file contains the following line to point to your local backend:
+    ```env
+    REACT_APP_API_URL="http://localhost:8000/api"
+    ```
+
 3. Start the development server:
    ```bash
    npm start

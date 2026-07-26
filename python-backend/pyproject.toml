@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "baif-translation-backend"
+version = "0.1.0"
+description = "Backend scaffold for BAIF Translation Platform"
+authors = ["BAIF Team <team@baif.org>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "baif_translation", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.102.0"
+uvicorn = "^0.23.0"
+pydantic = {extras = ["email"], version = "^2.13.4"}
+python-multipart = "^0.0.6"
+sqlalchemy = "^2.0.0"
+psycopg = { extras = ["binary"], version = "^3.3.0" }
+bcrypt = "^4.0.0"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.0"
+httpx = "^0.26.0"
+
+[build-system]
+requires = ["poetry-core>=1.6.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,17 +1,38 @@
 import React, { useState } from 'react';
-import { Leaf, Lock, User as UserIcon } from 'lucide-react';
+import { Leaf, Lock, User as UserIcon, AlertCircle, Loader } from 'lucide-react';
 import { useAuth } from './AuthContext';
+import InputField from './components/InputField';
 
 const LoginPage = ({ onSwitch }) => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
-  const { login } = useAuth();
+  const [localError, setLocalError] = useState(null);
+  const [validationErrors, setValidationErrors] = useState({});
+  const { login, loading } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(formData.username);
+    setLocalError(null);
+
+    if (!formData.email || !formData.password) {
+      setValidationErrors({ form: 'Please fill in all fields' });
+      return;
+    }
+
+    try {
+      await login(formData.email, formData.password);
+    } catch (err) {
+      setLocalError(err.message || 'Login failed. Please try again.');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (validationErrors.form) {
+      setValidationErrors({});
+    }
   };
 
   return (
@@ -28,40 +49,56 @@ const LoginPage = ({ onSwitch }) => {
           <p className="text-slate-500">Sign in to BAIF Translation Platform</p>
         </div>
 
+        {localError && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-gap-2">
+            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-red-700 ml-2">{localError}</p>
+          </div>
+        )}
+        {validationErrors.form && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-gap-2">
+            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-red-700 ml-2">{validationErrors.form}</p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-sm font-semibold text-slate-700">Username</label>
-            <div className="relative">
-              <UserIcon className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-              <input
-                type="text"
-                required
-                value={formData.username}
-                onChange={(e) => setFormData({...formData, username: e.target.value})}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20"
-                placeholder="Enter your username"
-              />
-            </div>
-          </div>
-          <div className="space-y-1">
-            <label className="text-sm font-semibold text-slate-700">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-              <input
-                type="password"
-                required
-                value={formData.password}
-                onChange={(e) => setFormData({...formData, password: e.target.value})}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20"
-                placeholder="••••••••"
-              />
-            </div>
-          </div>
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all mt-6">Sign In</button>
+          <InputField
+            name="email"
+            label="Email"
+            type="email"
+            icon={UserIcon}
+            value={formData.email}
+            onChange={handleInputChange}
+            disabled={loading}
+          />
+          <InputField
+            name="password"
+            label="Password"
+            type="password"
+            icon={Lock}
+            value={formData.password}
+            onChange={handleInputChange}
+            disabled={loading}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white font-bold py-3 rounded-xl transition-all mt-6 flex items-center justify-center gap-2"
+          >
+            {loading ? (
+              <>
+                <Loader className="w-4 h-4 animate-spin" />
+                Signing in...
+              </>
+            ) : (
+              'Sign In'
+            )}
+          </button>
         </form>
         
         <p className="mt-6 text-center text-sm text-slate-500">
-          Don't have an account? <button onClick={onSwitch} className="text-blue-600 font-semibold hover:underline">Register</button>
+          Don't have an account? <button onClick={onSwitch} className="text-blue-600 font-semibold hover:underline" disabled={loading}>Register</button>
         </p>
       </div>
     </div>

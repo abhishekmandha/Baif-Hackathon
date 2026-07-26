@@ -1,5 +1,5 @@
 import React from 'react';
-import { Video, User, LogOut, PlusCircle, LayoutGrid, Database, Settings, Sun, Moon } from 'lucide-react';
+import { Leaf, User, LogOut, PlusCircle, LayoutGrid, Database, Settings, Sun, Moon } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { useTheme } from './ThemeContext';
 
@@ -20,7 +20,7 @@ const Layout = ({ children, activeTab, setActiveTab }) => {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-white p-1.5 rounded-lg">
-              <Video className="w-6 h-6 text-blue-700" />
+              <Leaf className="w-6 h-6 text-blue-700" />
             </div>
             <h1 className="text-xl font-bold tracking-tight">BAIF Translation Platform</h1>
           </div>
