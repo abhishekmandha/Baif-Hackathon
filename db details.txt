@@ -1,5 +1,5 @@
 db details:
-password: password
+password: 123456
 port ;5432
 
 Installation Directory: C:\Program Files\PostgreSQL\18
@@ -19,4 +19,4 @@ Host: 192.168.1.10
 Port: 5432
 Database: hackathon_db
 Username: hackathon_user
-Password: StrongPassword123!
+Password: 123456

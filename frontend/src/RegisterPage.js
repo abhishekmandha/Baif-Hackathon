@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Leaf, Lock, User as UserIcon, Mail, AlertCircle, Loader } from 'lucide-react';
 import { useAuth } from './AuthContext';
+import InputField from './components/InputField';
 
 const RegisterPage = ({ onSwitch }) => {
   const [formData, setFormData] = useState({
@@ -55,33 +56,6 @@ const RegisterPage = ({ onSwitch }) => {
     }
   };
 
-  const InputField = ({ name, label, type = 'text', icon: Icon, error, disabled }) => (
-    <div className="space-y-1">
-      <label className="text-sm font-semibold text-slate-700">{label}</label>
-      <div className="relative">
-        <Icon className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
-        <input
-          type={type}
-          name={name}
-          required
-          disabled={disabled}
-          value={formData[name]}
-          onChange={(e) => {
-            setFormData({ ...formData, [name]: e.target.value });
-            if (validationErrors[name]) {
-              setValidationErrors({ ...validationErrors, [name]: null });
-            }
-          }}
-          className={`w-full pl-10 pr-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-50 ${
-            error ? 'border-red-300 focus:ring-red-500/20' : 'border-slate-200'
-          }`}
-          placeholder={type === 'password' ? '••••••••' : label}
-        />
-      </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-    </div>
-  );
-
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#191970' }}>
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
@@ -110,6 +84,14 @@ const RegisterPage = ({ onSwitch }) => {
             icon={UserIcon}
             error={validationErrors.fullName}
             disabled={loading}
+            value={formData.fullName}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData((prev) => ({ ...prev, fullName: value }));
+              if (validationErrors.fullName) {
+                setValidationErrors((prev) => ({ ...prev, fullName: null }));
+              }
+            }}
           />
           <InputField
             name="email"
@@ -118,6 +100,14 @@ const RegisterPage = ({ onSwitch }) => {
             icon={Mail}
             error={validationErrors.email}
             disabled={loading}
+            value={formData.email}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData((prev) => ({ ...prev, email: value }));
+              if (validationErrors.email) {
+                setValidationErrors((prev) => ({ ...prev, email: null }));
+              }
+            }}
           />
           <InputField
             name="password"
@@ -126,6 +116,14 @@ const RegisterPage = ({ onSwitch }) => {
             icon={Lock}
             error={validationErrors.password}
             disabled={loading}
+            value={formData.password}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData((prev) => ({ ...prev, password: value }));
+              if (validationErrors.password) {
+                setValidationErrors((prev) => ({ ...prev, password: null }));
+              }
+            }}
           />
           <InputField
             name="confirmPassword"
@@ -134,6 +132,14 @@ const RegisterPage = ({ onSwitch }) => {
             icon={Lock}
             error={validationErrors.confirmPassword}
             disabled={loading}
+            value={formData.confirmPassword}
+            onChange={(e) => {
+              const value = e.target.value;
+              setFormData((prev) => ({ ...prev, confirmPassword: value }));
+              if (validationErrors.confirmPassword) {
+                setValidationErrors((prev) => ({ ...prev, confirmPassword: null }));
+              }
+            }}
           />
 
           <button

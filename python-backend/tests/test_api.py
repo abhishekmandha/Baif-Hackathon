@@ -25,6 +25,26 @@ def test_upload_and_list_jobs():
     assert len(jobs_payload['jobs']) >= 1
 
 
+def test_login_with_valid_credentials():
+    register_response = client.post(
+        '/api/users',
+        json={
+            'email': 'login@example.com',
+            'password': 'secret123',
+            'full_name': 'Login User',
+        },
+    )
+    assert register_response.status_code == 200
+
+    login_response = client.post(
+        '/api/login',
+        json={'email': 'login@example.com', 'password': 'secret123'},
+    )
+    assert login_response.status_code == 200
+    payload = login_response.json()
+    assert payload['email'] == 'login@example.com'
+
+
 def test_get_job_not_found():
     response = client.get('/api/jobs/not-found')
     assert response.status_code == 404

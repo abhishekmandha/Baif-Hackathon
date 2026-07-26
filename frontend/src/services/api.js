@@ -97,21 +97,18 @@ export const authAPI = {
   },
 
   /**
-   * Login user to get an access token.
+   * Login user by email and password.
    * @param {string} email - User email
    * @param {string} password - User password
    * @returns {Promise<object>} User data
    */
   login: async (email, password) => {
-    // The backend expects form data for the token endpoint.
-    const formData = new URLSearchParams();
-    formData.append('username', email);
-    formData.append('password', password);
-
-    return makeRequest('/token', {
+    return makeRequest('/login', {
       method: 'POST',
-      body: formData.toString(),
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: {
+        email,
+        password,
+      },
     });
   },
 

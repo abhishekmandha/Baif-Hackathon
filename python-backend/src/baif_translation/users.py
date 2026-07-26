@@ -23,6 +23,20 @@ def create_user_endpoint(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
+@router.post("/users/sample", response_model=UserResponse)
+def create_sample_user(db: Session = Depends(get_db)):
+    sample_user = UserCreate(
+        email="alice@example.com",
+        password="Secret123!",
+        full_name="Alice Example",
+        is_active=True,
+    )
+    try:
+        return create_user(db, sample_user)
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
 @router.get("/users", response_model=list[UserResponse])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return get_users(db, skip=skip, limit=limit)

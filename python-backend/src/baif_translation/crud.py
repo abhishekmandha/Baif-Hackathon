@@ -18,6 +18,10 @@ def get_users(db: Session, skip: int = 0, limit: int = 100) -> list[User]:
 
 
 def create_user(db: Session, user: UserCreate) -> User:
+    existing_user = get_user_by_email(db, user.email)
+    if existing_user:
+        return existing_user
+
     password_hash = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
     db_user = User(email=user.email, full_name=user.full_name, password_hash=password_hash, is_active=user.is_active)
     db.add(db_user)

@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .db import init_db
+from .routes_auth import router as auth_router
 from .routes_download import router as download_router
 from .routes_history import router as history_router
 from .routes_jobs import router as jobs_router
@@ -21,6 +22,9 @@ async def lifespan(app: FastAPI):
         print(f"✗ Database initialization failed: {e}")
     yield
     print("Application shutdown")
+
+
+init_db()
 
 
 app = FastAPI(
@@ -46,6 +50,7 @@ app.add_middleware(
 
 app.include_router(upload_router, prefix="/api")
 app.include_router(jobs_router, prefix="/api")
+app.include_router(auth_router, prefix="/api")
 app.include_router(download_router, prefix="/api")
 app.include_router(history_router, prefix="/api")
 app.include_router(users_router, prefix="/api")
